@@ -7,8 +7,12 @@ export default {
 	},
 	// test
 	getTest () {
-		console.log(111)
+		console.log(222)
 	},
+    getTest222 () {
+		console.log(222)
+	},
+
 	// 获取订单详情
 	getOrderDetails (data) {
 		return post('api/Order/queryOrderView', data)

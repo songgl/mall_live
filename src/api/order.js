@@ -5,6 +5,10 @@ export default {
 	getOrderList (data) {
 		return post('api/Order/queryOrderByState', data)
 	},
+	// test
+	getTest () {
+		console.log(111)
+	},
 	// 获取订单详情
 	getOrderDetails (data) {
 		return post('api/Order/queryOrderView', data)

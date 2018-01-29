@@ -2,12 +2,8 @@ import { post, get } from './config'
 
 export default {
 	// 获取订单列表
-	getOrderList (data,type) {
-		console.log(type)
+	getOrderList (data) {
 		return post('api/Order/queryOrderByState', data)
-	},
-	getTest () {
-		console.log(222)
 	},
 	// 获取订单详情
 	getOrderDetails (data) {

@@ -9,8 +9,8 @@ export default {
 	getTest () {
 		console.log(222)
 	},
-    getTest222 () {
-		console.log(222)
+    getTest333 () {
+		console.log(333)
 	},
 
 	// 获取订单详情

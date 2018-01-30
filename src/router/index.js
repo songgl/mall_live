@@ -5,9 +5,12 @@ import Login from '@/pages/login/login'
 import Mall from '@/pages/mall/mall'
 import Home from '@/pages/mall/home/home'
 import GoodsClass from '@/pages/mall/goodsClass/goodsClass'
+import ShopDetails from '@/pages/mall/shopDetails/shopDetails'
 import GoodsDetails from '@/pages/mall/goodsDetails/goodsDetails'
 import ConfirmOrder from '@/pages/mall/confirmOrder/confirmOrder'
 import OrderPay from '@/pages/mall/orderPay/orderPay'
+
+import ShoppingCar from '@/pages/mall/shoppingCar/shoppingCar'
 
 import Portal from '@/pages/portal/portal'
 import MeDetails from '@/pages/portal/meDetails/meDetails'
@@ -54,6 +57,10 @@ export default new Router({
           path: 'goodsDetails', // 商品详情页
           name: 'goodsDetails',
           component: GoodsDetails
+        },{
+          path: 'shopDetails', // 店铺详情
+          name: 'shopDetails',
+          component: ShopDetails
         }
       ]
     },{
@@ -64,6 +71,10 @@ export default new Router({
       path: '/orderPay', // 订单支付页
       name: 'orderPay',
       component: OrderPay
+    },{
+      path: '/shoppingCar', // 购物车
+      name: 'shoppingCar',
+      component: ShoppingCar
     },{
       path: '/portal',
       name: 'portal',

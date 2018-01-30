@@ -1,15 +1,13 @@
 <template>
-  <div class="thisHeader">
-    <div class="container clearfix">
-      <router-link to="/" class="logoImg">
-        <img src="../../../../assets/images/corelogo.png" alt="">
-      </router-link>
-      <div class="title">购物车</div>
-      <div class="flowBox clearfix">
-        <span class="on">购物车</span>
-        <span class="off">确认订单</span>
-        <span class="off">完成付款</span>
-      </div>
+  <div class="clearfix">
+    <router-link to="/" class="logoImg">
+      <img src="../../../../assets/images/corelogo.png" alt="">
+    </router-link>
+    <div class="title">购物车</div>
+    <div class="flowBox clearfix">
+      <span class="on">购物车</span>
+      <span class="off">确认订单</span>
+      <span class="off">完成付款</span>
     </div>
   </div>
   

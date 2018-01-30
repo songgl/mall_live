@@ -6,7 +6,7 @@
         <div v-else="!uid || !token">欢迎您，<em v-text="userInfo.username" style="color:red"></em><span class="loginBtn" @click="loginOut">【退出】</span></div>
       </div>
       <div class="right-box">
-        <router-link :to="{path: '/'}">购物车</router-link>|
+        <router-link :to="{path: '/shoppingCar'}">购物车</router-link>|
         <router-link :to="{path: '/portal/orderList'}">我的订单</router-link>|
         <router-link :to="{path: '/portal'}">个人中心</router-link>|
         <router-link :to="{path: '/portal/goodsCollection'}">商品收藏</router-link>

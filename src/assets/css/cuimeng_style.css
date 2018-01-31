@@ -17,8 +17,8 @@
 
 
 /*背景颜色*/
-  .bg_red{ background-color: #ff6350;}
-
+  .bg_red{ background-color: #ff6350;}.bg_e3e4e5{ background-color: #e3e4e5;}
+  .bg_f1f1f1{background-color: #f1f1f1;}
 /*间距*/
   .pl-5{ padding-left: 5px;}
   .pt-30{ padding-top: 30px;}
@@ -26,20 +26,27 @@
   .pr-5{ padding-right: 5px;}
   
   .ml-10{margin-left: 10px;}
-  .mr-10{margin-right: 10px;}
+  .mr-5{margin-right: 5px;}.mr-10{margin-right: 10px;}.mr-40{margin-right: 40px;}.mr-60{margin-right: 60px;}
+
   .mt-15{margin-top: 15px;}
   .mt-20{margin-top: 20px;}
+  .mt-40{margin-top: 40px;}.mt-60{margin-top: 60px;}
 
 /*边框*/
-  .bor-b{border-bottom: 1px solid #f1f1f1;}
+  .bor{border:1px solid #e3e4e5;}
+  .bor-b{border-bottom: 1px solid #e3e4e5;}
 
 /*宽度*/
   .w100{width: 100%;}
+  .w-80{width: 80px;}
   .w-100{width: 100px;}
   .w-120{width: 120px;}
+  .w-300{width: 300px;}
   .w-390{width: 390px;}
 /*高度*/
   .h100{height: 100%;}
+  .h-36{height: 36px;}
+  .h-40{height: 40px;}
   .h-85{height: 85px;}
   .h-360{height: 360px;}
 

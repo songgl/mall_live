@@ -11,7 +11,7 @@
               <li ><label style="float: left;">详细地址：</label>{{item.address_province+item.address_city+item.address_country+item.address_detailed}}</li>
               <li ><label>手机号：</label>{{item.address_mobile}}</li>
               <li ><label>邮编：{{item.address_zip_code}}</label>
-                <a href="javascript:;" >编辑</a><a href="javascript:;" class="act" v-if="item.is_default=='1'">默认地址</a><a href="javascript:;" class="" v-on:click="setDefault(item.address_id)" v-if="item.is_default=='0'">设为默认</a></li>
+                <a href="javascript:;" @click="add_editAddress(2)">编辑</a><a href="javascript:;" class="act" v-if="item.is_default=='1'">默认地址</a><a href="javascript:;" class="" v-on:click="setDefault(item.address_id)" v-if="item.is_default=='0'">设为默认</a></li>
             </ul>
          </div>
        </div>

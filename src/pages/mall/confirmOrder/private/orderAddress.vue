@@ -2,7 +2,7 @@
   <div class="orderAddressBox">
     <div class="titleBox clearfix">
       <span>确认收货地址</span>
-      <router-link class="deliver" :to="{path: 'address', query:{}}">管理收货地址</router-link>
+      <router-link class="deliver" :to="{path: '/portal/myAddress'}">管理收货地址</router-link>
     </div>
     <ul class="address-list">
       <li class="address-wrap clearfix" :class="{selected: selectAddressId == item.address_id}" v-for="(item, index) in addressList" :key="item.address_id" @click="choiceItem(item)">

@@ -10,7 +10,7 @@
           <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
               <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>
@@ -28,7 +28,7 @@
         <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
               <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>
@@ -46,7 +46,7 @@
         <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
               <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>

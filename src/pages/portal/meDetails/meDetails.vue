@@ -21,28 +21,28 @@
     
     <div class="grzl-ddnav box clearfix">
           <div>
-            <p><img src="@/assets/icon/dfk.png"></p>
+            <p><img src="../../../assets/icon/dfk.png"></p>
             <ul>
               <li>待付款：<span class="">0</span></li>
               <li><a href="">查看待支付订单&gt;</a></li>
             </ul>
           </div>
           <div>
-            <p><img src="@/assets/icon/dsh.png"></p>
+            <p><img src="../../../assets/icon/dsh.png"></p>
             <ul>
               <li>待收货：<span class="">0</span></li>
               <li><a href="">查看待收货订单&gt;</a></li>
             </ul>
           </div>
           <div>
-            <p><img src="@/assets/icon/dpj.png"></p>
+            <p><img src="../../../assets/icon/dpj.png"></p>
             <ul>
               <li>待评论：<span class="">0</span></li>
               <li><a href="">查看待评论订单&gt;</a></li>
             </ul>
           </div>
           <div>
-            <p><img src="@/assets/icon/tkz.png"></p>
+            <p><img src="../../../assets/icon/tkz.png"></p>
             <ul>
               <li>退款售后：<span class="">0</span></li>
               <li><a href="">查看退款售后订单&gt;</a></li>

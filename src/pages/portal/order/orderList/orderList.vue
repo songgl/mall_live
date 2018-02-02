@@ -34,7 +34,7 @@
                 <td class="td1" style="padding:30px 0px;">
                   <div class="dd-l-list clearfix " >
                     <ul>
-                      <li class="img"><a target="_blank" href="#"><img src="@/assets/images/tu2@3x.png" ></a></li>
+                      <li class="img"><a target="_blank" href="#"><img src="../../../../assets/images/tu2@3x.png" ></a></li>
                       <li class="txt"><a target="_blank" href="" >Recombinant Human Histone Deacetylase 8/HDAC8 Protein</a></li>
                       <li class="num ">×1</li>
                       <li class="sqsh" >
@@ -47,7 +47,7 @@
                   </div>
                     <div class="dd-l-list clearfix " >
                     <ul>
-                      <li class="img"><a target="_blank" href="#"><img src="@/assets/images/tu2@3x.png" ></a></li>
+                      <li class="img"><a target="_blank" href="#"><img src="../../../../assets/images/tu2@3x.png" ></a></li>
                       <li class="txt"><a target="_blank" href="" >Recombinant Human Histone Deacetylase 8/HDAC8 Protein</a></li>
                       <li class="num ">×1</li>
                       <li class="sqsh" >

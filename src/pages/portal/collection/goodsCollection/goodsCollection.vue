@@ -10,7 +10,7 @@
           <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="priceBox">
                  <span class="now_price">¥<em >999</em></span>
@@ -26,7 +26,7 @@
           <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="priceBox">
                  <span class="now_price">¥<em >999</em></span>
@@ -42,7 +42,7 @@
           <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="priceBox">
                  <span class="now_price">¥<em >999</em></span>
@@ -58,7 +58,7 @@
            <div class="goodsItemBox">
               <div class="itemContent">
                 <div class="goodsImg">
-                   <img src="@/assets/images/tu2@3x.png" alt="">
+                   <img src="../../../../assets/images/tu2@3x.png" alt="">
                 </div>
               <div class="priceBox">
                  <span class="now_price">¥<em >999</em></span>

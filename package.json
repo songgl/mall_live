@@ -10,8 +10,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@xkeshi/vue-qrcode": "^0.3.0",
     "axios": "^0.17.1",
     "element-ui": "^2.0.10",
+    "pingpp-js": "^2.2.1",
     "v-distpicker": "^1.0.16",
     "vue": "^2.5.2",
     "vue-lazyload": "^1.1.4",

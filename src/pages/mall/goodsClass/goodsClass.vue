@@ -17,8 +17,8 @@
         <box-left></box-left>
         <div class="box-right">
           <div class="clearfix">
-            <div class="goodsItemBox">
-              <goods-item :goods-info='item' v-for="item in goodsList" :key="item.goods_id"></goods-item>
+            <div class="goodsItemBox" v-for="item in goodsList" :key="item.goods_id">
+              <goods-item :goods-info='item'></goods-item>
             </div>
           </div>
           <div class="paginaction" v-show="allPage > 1">

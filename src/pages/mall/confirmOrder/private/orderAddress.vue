@@ -58,7 +58,7 @@ export default {
         console.log(res)
         if(res.status === 'ok'){
           this.addressList = res.data
-          if(!type){
+          if(!type && res.data != ''){
             this.choiceItem(res.data[0])
           }
         }else if(res.status === 'error'){

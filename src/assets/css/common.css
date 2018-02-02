@@ -47,16 +47,3 @@
 /*删除线*/
 .scx{text-decoration:line-through;}
 
-.mk{
-	background: #3a3a3a; 
-	filter:alpha(opacity=60);
-	-moz-opacity:0.6; 
-	-khtml-opacity: 0.6; 
-	opacity: 0.6;
-	position: fixed;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 999;
-}

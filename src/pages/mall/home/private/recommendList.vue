@@ -7,8 +7,8 @@
           <img :src="item.img" alt="" />
         </router-link>
         <div class="c_right clearfix">
-          <div class="goodsItemBox">
-            <goods-item :goods-info="goods" v-for="goods in item.seedBeans" :key="goods.goods_id"></goods-item>
+          <div class="goodsItemBox" v-for="goods in item.seedBeans" :key="goods.goods_id">
+            <goods-item :goods-info="goods"></goods-item>
           </div>
         </div>
       </div>

@@ -67,5 +67,7 @@ export default{
 
 		// 手机号正则
 		Vue.prototype.phoneReg = /^1[3|4|5|7|8]\d{9}$/
+
+		Vue.prototype.Number = /[^1-9]/g
   }
 }

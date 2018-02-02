@@ -19,21 +19,21 @@
           <div class="info_left">
             <h2 class="title">订单提交成功！去付款咯～</h2>
             <p class="order_time">
-              请在<span>0小时30分</span>内完成支付, 超时后将取消订单
+              请在<count-down :endTime="endTime" :callback="callback" v-if="endTime"></count-down>内完成支付, 超时后将取消订单
             </p>
             <p class="order_address">
               收货信息：
-              <span>宋根灵</span>
-              <span>187****1770</span>
-              <span>上海</span>
-              <span>上海市</span>
-              <span>浦东新区</span>
-              <span>三林镇和炯路601弄</span>
+              <span v-text="orderDetails.address_name"></span>
+              <span v-text="orderDetails.address_mobile"></span>
+              <span v-text="orderDetails.address_province"></span>
+              <span v-text="orderDetails.address_city"></span>
+              <span v-text="orderDetails.address_country"></span>
+              <span v-text="orderDetails.address_detailed"></span>
             </p>
           </div>
           <div class="info_right">
             <p class="total_price">
-              应付金额：<span class="money">¥999</span>  
+              应付金额：¥<span class="money" v-text="orderDetails.amount"></span>  
             </p>
           </div>
         </div>
@@ -41,16 +41,17 @@
       <div class="order_item">
         <div class="mode_title">选择以下支付方式付款</div>
         <div class="payment-header">支付平台</div>
-        <div class=" clearfix">
-          <div class="pay_item">
+        <div class="clearfix">
+          <div class="pay_item" @click="orderPay('wx_pub_qr')">
             <div class="wx_pay"></div>
           </div>
-          <div class="pay_item">
+          <div class="pay_item" @click="orderPay('ali_pub_qr')">
             <div class="ali_pay"></div>
           </div>
         </div>
       </div>
     </div>
+    <pay-code :value="orderPayInfo.credential.wx_pub_qr" v-if="payCodeState"></pay-code>
     <my-footer></my-footer>
   </div>
 </template>
@@ -58,24 +59,30 @@
 <script>
 import api from '@/api/order'
 import myFooter from '@/components/footer/footer'
+import payCode from './private/payCode'
+import CountDown from '@/components/countDown/countDown'
 
 export default {
   data () {
     return {
-      orderDetails: {}
+      orderDetails: {},
+      orderPayInfo: {},
+      payCodeState: false,
+      endTime: null
     }
   },
   methods: {
     // 获取订单详情
-    _getOrderDetails () {
-      api.getOrderDetails({
+    _getOrderPayDetails () {
+      api.getOrderPayDetails({
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
-        order_merchants_id: this.$route.query.order_id
+        order_no: this.$route.query.order_no
       }).then(res => {
         console.log(res)
         if(res.status === 'ok'){
           this.orderDetails = res.data
+          this.endTime = parseInt(res.data.cancel_end_time) * 1000
         }else if(res.status === 'error'){
           this.promptFun({
             content: res.data,
@@ -83,16 +90,49 @@ export default {
           })
         }
       })
+    },
+    // 支付
+    orderPay (type) {
+      if(type == 'ali_pub_qr'){
+        this.promptFun({
+          content: '该功能暂未开通',
+          type: 'notice'
+        })
+        return false;
+      }
+      api.orderPay({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        order_no: this.$route.query.order_no,
+        type
+      }).then(res => {
+        console.log(res)
+        if(res.status === 'ok'){
+          this.orderPayInfo = res.data,
+          this.payCodeState = true;
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+    // 倒计时结束回调
+    callback () {
+      console.log('倒计时结束')
+      this.$router.replace({
+        path:'/portal/orderList'
+      })
     }
   },
   created () {
-    this._getOrderDetails()
-  },
-  mounted () {
-    
+    this._getOrderPayDetails()
   },
   components: {
-    myFooter
+    myFooter,
+    payCode,
+    CountDown
   }
 }
 </script>

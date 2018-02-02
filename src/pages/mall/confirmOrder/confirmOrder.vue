@@ -23,7 +23,7 @@
             <router-link :to="{path: 'shopDetails', query:{merchants_id: shop.merchants_id}}" v-text="shop.merchants_name"></router-link>
           </div>
           <!-- 商品列表项 -->
-          <div class="orderGoods-item clearfix" v-for="goods in shop.goods" :key="goods.goods_id">
+          <div class="orderGoods-item clearfix" v-for="goods in shop.goods">
             <div class="goodsItem-td td-0">
               <router-link :to="{path: 'goodsDetails', query: {goods_id: goods.goods_id}}" class="clearfix">
                 <div class="goodsImg">
@@ -57,7 +57,7 @@
                 <span>实付款：</span>
                 <span class="real-price">¥<em v-text="confirmOrderInfo.amount"></em></span>
               </div>
-              <div class="payInfo-address">
+              <div class="payInfo-address" v-show="thisAddressInfo.address_id">
                 <div class="addr">
                   <span class="addrTitle">寄送至:</span>
                   <span class="addrDetail" v-text="thisAddressInfo.address_province"></span>
@@ -71,11 +71,15 @@
                   <span v-text="thisAddressInfo.address_mobile"></span>
                 </div>
               </div>
+              <div class="isNotAddress" v-show='!thisAddressInfo.address_id'>
+                您还没有选择收货地址
+              </div>
             </div>
           </div>
         </div>
         <div class="submitBtnBox">
-          <div class="btn-wrap" @click="submitOrder">提交订单</div>
+          <div v-show="thisAddressInfo.address_id" class="btn-wrap on" @click="submitOrder">提交订单</div>
+          <div v-show="!thisAddressInfo.address_id" class="btn-wrap off">提交订单</div>
         </div>
       </div>
     </div>
@@ -170,7 +174,7 @@ export default {
       }).then(res => {
         console.log(res)
         if(res.status === 'ok'){
-          this.$router.push({
+          this.$router.replace({
             path: 'orderPay',
             query: {
               order_no: res.data.order_no,
@@ -385,7 +389,17 @@ export default {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
+  }
+  .btn-wrap.on{
     background: red;
     color: #fff;
+  }
+  .btn-wrap.off{
+    background: #ccc;
+  }
+  .isNotAddress{
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: 700;
   }
 </style>

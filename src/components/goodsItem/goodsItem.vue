@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{path: 'goodsDetails', query: {goods_id: goodsInfo.goods_id}}" class="itemContent">
+  <router-link :to="{path: '/mall/goodsDetails', query: {goods_id: goodsInfo.goods_id}}" class="itemContent">
     <div class="goodsImg">
       <img :src="goodsInfo.goods_img" alt="">
     </div>

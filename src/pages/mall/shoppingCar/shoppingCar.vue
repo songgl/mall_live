@@ -29,7 +29,7 @@
               </div>
               <div class="goods-content">
                 <!-- 商品列表 -->
-                <div class="goods-item clearfix" v-for="(goods, index) in shop.goods" :key="goods.car_id">
+                <div class="goods-item clearfix" v-for="(goods, index) in shop.goods" :key="goods.goods_id">
                   <div class="td td-chk" :class="[goods.checked ? 'on' : 'off']" @click="carGoodsItemClick(paIndex,index)"></div>
                   <div class="td td-item">
                     <div class="td-inner clearfix">
@@ -52,17 +52,17 @@
                   </div>
                   <div class="td td-price">¥<em v-text="goods.goods_now_price * goods.goods_num"></em></div>
                   <div class="td td-op">
-                    <span @click="_delCarGoods(goods.car_id)">删除</span>
+                    <span>删除</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="all-bra-warp clearfix">
               <div class="all-check" :class="[allChecked ? 'on' : 'off']" @click="checkAllClick">全选</div>
-              <div class="delOn" @click="_delCarGoods()">删除</div>
-              <div class="submit-btn on" @click="settlement">结算</div>
+              <div class="delOn">删除</div>
+              <div class="submit-btn on">结算</div>
               <div class="totalPrice">合计(不含运费): ¥<em v-text="totalMoney"></em></div>
-              <div class="checkOnCount">已选商品<em v-text="car_ids.length"></em>件</div>
+              <div class="checkOnCount">已选商品<em>0</em>件</div>
             </div>
           </div>
         </div>
@@ -227,20 +227,17 @@ export default {
     * 计算商品总金额
     */
     carTotalMoney () {
-      let _this = this
-      this.car_ids = []
+      let oThis = this
       this.totalMoney = 0
       for ( let i = 0; i < this.validInfo.length; i++ ) {
         let goods = this.validInfo[i]['goods']
         goods.forEach(function(item, index, arr) {
           if ( goods[index]['checked'] ) {
-            _this.car_ids.push(goods[index].car_id)
-            _this.totalMoney += parseFloat(item.goods_now_price) * parseFloat(item.goods_num)
+            oThis.totalMoney += parseFloat(item.goods_now_price) * parseFloat(item.goods_num)
           }
         });
       }
-      console.log(this.car_ids)
-      console.log(_this.totalMoney)
+      console.log(oThis.totalMoney)
     },
     /*
     * 数量加减
@@ -262,85 +259,6 @@ export default {
           }
           this.carTotalMoney() // 计算总价
         }else if(res.status === 'error'){
-          this.promptFun({
-            content: res.data,
-            type: 'error'
-          })
-        }
-      })
-    },
-
-    /*
-    * 结算
-    */
-    settlement () {
-      // let _this = this
-      // this.car_ids = []
-      // for( let i = 0; i<this.validInfo.length; i++){
-      //   let goods = this.validInfo[i]['goods']
-      //   goods.forEach(function(item, index, arr){
-      //     if(goods[index]['checked']){
-      //       _this.car_ids.push(goods[index].car_id)
-      //     }
-      //   })
-      // }
-      if(this.car_ids.length < 1){
-        this.promptFun({
-          content:'您还没有选择商品哦',
-          type:'error'
-        })
-        return false
-      }
-      this.$router.push({
-        path:'/confirmOrder',
-        query: {
-          car_ids: this.car_ids.join(",")
-        }
-      })
-    },
-
-
-    /*
-    * 删除
-    */
-    _delCarGoods (id) {
-      let paramCar = null
-      if(!id){ // 多个
-        // let _this = this
-        // this.car_ids = []
-        // for( let i = 0; i<this.validInfo.length; i++){
-        //   let goods = this.validInfo[i]['goods']
-        //   goods.forEach(function(item, index, arr){
-        //     if(goods[index]['checked']){
-        //       _this.car_ids.push(goods[index].car_id)
-        //     }
-        //   })
-        // }
-        if(this.car_ids.length < 1){
-          this.promptFun({
-            content:'您还没有选择商品哦',
-            type:'error'
-          })
-          return false
-        }
-        paramCar = this.car_ids.join(',')
-        console.log(paramCar)
-      } else {
-        paramCar = id
-      }
-
-      api.delCarGoods({
-        uid: this.getCookie('uid'),
-        token: this.getCookie('token'),
-        car_ids: paramCar
-      }).then(res => {
-        if(res.status === 'ok'){
-          this._getCarGoods()
-          this.promptFun({
-            content: res.data,
-            type: 'success'
-          })
-        } else if(res.status === 'error'){
           this.promptFun({
             content: res.data,
             type: 'error'

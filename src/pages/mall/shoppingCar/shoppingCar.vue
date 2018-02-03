@@ -79,7 +79,6 @@ import myHeader from '@/components/header/header'
 import myFooter from '@/components/footer/footer'
 import flowPath from './private/flowPath'
 import guessLike from './private/guessLike'
-
 export default {
   data () {
     return {
@@ -135,7 +134,6 @@ export default {
         }
       })
     },
-
     /*
     * 判断商品是否全部选中
     */
@@ -149,7 +147,6 @@ export default {
       }
       flag1 == true ? this.allChecked = true : this.allChecked = false;
     },
-
     /*
     * 全选
     */
@@ -175,7 +172,6 @@ export default {
     shopCheckAllClick (index) {
       let listObj = this.validInfo[index]
       let goods = this.validInfo[index]['goods'] // 当前店铺下的商品数组
-
       if ( this.validInfo[index]['checked'] ) {
         for (let i = 0; i < goods.length; i++ ) {
           goods[i]['checked'] = false
@@ -186,21 +182,18 @@ export default {
         }
       }
       // this.validInfo[index]['checked'] = !this.validInfo[index]['checked']; // Vue 不能检测这样变动的数组，所以视图不会更新
-
       listObj.checked = !listObj.checked
       this.$set(this.validInfo,index,listObj)
       
       this.isChooseAll() // 判断是否选择所有商品的全选
       this.carTotalMoney() // 计算总价
     },
-
     /*
     * 单个商品选中
     */
     carGoodsItemClick (paIndex,index) {
       let goodsArr = this.validInfo[paIndex]['goods'] // 当前店铺下的商品数组
       let goodsListObj = this.validInfo[paIndex].goods[index] // 当前的商品
-
       if ( goodsArr[index]['checked'] ) {
         this.validInfo[paIndex]['checked'] = false;
         this.allChecked = false;
@@ -209,7 +202,6 @@ export default {
       } else {
         goodsListObj.checked = !goodsListObj.checked
         this.$set(goodsArr,index,goodsListObj)
-
         // 判断当前店铺是否全选
         let flag = true
         for (let i = 0; i < goodsArr.length; i++ ) {
@@ -248,7 +240,6 @@ export default {
     numberfn (paIndex,index,type) { // type=0(加)，type=1(减)
       let merchantsObj = this.validInfo[paIndex],
           goodsObj = this.validInfo[paIndex].goods[index]
-
       api.carGoodsCount(type,{
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
@@ -269,7 +260,6 @@ export default {
         }
       })
     },
-
     /*
     * 结算
     */
@@ -298,24 +288,12 @@ export default {
         }
       })
     },
-
-
     /*
     * 删除
     */
     _delCarGoods (id) {
       let paramCar = null
       if(!id){ // 多个
-        // let _this = this
-        // this.car_ids = []
-        // for( let i = 0; i<this.validInfo.length; i++){
-        //   let goods = this.validInfo[i]['goods']
-        //   goods.forEach(function(item, index, arr){
-        //     if(goods[index]['checked']){
-        //       _this.car_ids.push(goods[index].car_id)
-        //     }
-        //   })
-        // }
         if(this.car_ids.length < 1){
           this.promptFun({
             content:'您还没有选择商品哦',
@@ -328,7 +306,6 @@ export default {
       } else {
         paramCar = id
       }
-
       api.delCarGoods({
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),

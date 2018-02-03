@@ -25,46 +25,35 @@
         </ul>
       </div>
       <div class="ddlist-box">
-        <div class="ddlist " >
-          <div class="tit"><span >下单时间：2018-02-02 10:35:59</span><span >订单号：20180202103559490753899418</span><span >沃鎏波洱
+        <div class="ddlist " v-for="item in orderList " >
+          <div class="tit"><span >下单时间：</span><span >订单号：{{item.order_no}}</span><span >{{item.merchants_name}}
             <a target="_blank" href="http://kefu.easemob.com/webim/im.html?tenantId=45997"><img src="@/assets/icon/lianxishangjia.png"></a></span></div>
           <div class="table">
             <table cellspacing="0" cellpadding="0">
               <tbody><tr>
-                <td class="td1" style="padding:30px 0px;">
-                  <div class="dd-l-list clearfix " >
+                <td class="td1" style="padding: 0;">
+                  <div class="dd-l-list clearfix " v-for="citem in item.orderBeans ">
                     <ul>
-                      <li class="img"><a target="_blank" href="#"><img src="../../../../assets/images/tu2@3x.png" ></a></li>
-                      <li class="txt"><a target="_blank" href="" >Recombinant Human Histone Deacetylase 8/HDAC8 Protein</a></li>
-                      <li class="num ">×1</li>
+                      <li class="img"><router-link :to="{path: '/mall/goodsDetails', query: {goods_id: citem.goods_id}}"><img v-bind:src="citem.goods_img" ></router-link></li>
+                      <li class="txt"><router-link :to="{path: '/mall/goodsDetails', query: {goods_id: citem.goods_id}}" v-text="citem.goods_name" ></router-link ></li>
+                      <li class="num ">×{{citem.goods_num}}</li>
+
                       <li class="sqsh" >
-                        <span class="blue" ><a href="#">申请退款</a></span>
+                        <!-- <span class="blue" ><a href="#">申请退款</a></span> -->
                         <!-- <span class="blue" >等待审核</span> -->
                         <!-- <span class="blue" >退款成功</span> -->
                         <!-- <span class="blue" >退款申请已拒绝</span> -->
                       </li>
                     </ul>
                   </div>
-                    <div class="dd-l-list clearfix " >
-                    <ul>
-                      <li class="img"><a target="_blank" href="#"><img src="../../../../assets/images/tu2@3x.png" ></a></li>
-                      <li class="txt"><a target="_blank" href="" >Recombinant Human Histone Deacetylase 8/HDAC8 Protein</a></li>
-                      <li class="num ">×1</li>
-                      <li class="sqsh" >
-                        <span class="blue" ><a href="#">申请退款</a></span>
-                        <!-- <span class="blue" >等待审核</span> -->
-                        <!-- <span class="blue" >退款成功</span> -->
-                        <!-- <span class="blue" >退款申请已拒绝</span> -->
-                      </li>
-                    </ul>
-                  </div>
+                
                 </td>
-                <td class="td2 red ">￥2827.50</td>
-                <td class="td3"><span class="">待付款</span>
+                <td class="td2 red ">￥{{item.order_actual_price}}</td>
+                <td class="td3"><span class="">{{item.order_state==='cancel'?'取消':item.order_state==='wait_pay'?'待付款':item.order_state==='wait_send'?'带发货':item.order_state==='wait_receive'?'待确认收货':item.order_state==='wait_assessment'?'待评价':item.order_state==='end'?'已结束':''}}</span>
                   <a href="#">订单详情</a>
                 </td>
                 <td class="td4 " >
-                  <span class="huise"></span><span class="btn" >立即付款</span>
+                  <span class="huise"></span><router-link :to="{path: '/orderPay',query: {order_id:item.order_id,order_no:item.order_no}}" class="btn" >立即付款</router-link>
                   <span class="del" >取消订单</span>
                 </td>
               </tr>
@@ -81,20 +70,52 @@
 
 <script>
 import '@/assets/css/cuimeng_style.css'
+import { Pagination } from 'element-ui'
+import storage from '@/common/storage'
+import api from '@/api/order'
 export default {
   data () {
     return {
-
+      orderList : [],
+      currentPage: 1, // 当前页
+      allPage: 1 ,// 总页数
     }
   },
   methods: {
 
+    // 获取订单列表
+    _getOrderList (type,p) {
+      this.orderList = []
+      this.currentPage = p || 1
+      this.orderType = type || '' //cancel：取消 wait_pay:待付款 wait_send:带发货 wait_receive：待确认收货 wait_assessment：待评价 end：已结束 
+      api.getOrderList({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        order_state : this.orderType,
+        p : this.currentPage,
+        pagesize: 4
+      }).then(res => {
+         console.log(res)
+        if(res.status === 'ok'){
+          this.allPage = res.data.page
+          for(let i=0; i<res.data.list.length; i++){
+            this.orderList.push(res.data.list[i])
+          }
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+
   },
   created () {
-
+    this._getOrderList()
   },
   components: {
-
+    ElPagination: Pagination,
   }
 }
 </script>
@@ -279,4 +300,8 @@ input {
     padding: 3px 6px;  
     text-align: center;
 }
+.paginaction{
+    margin: 10px auto 0;
+    width: 80%;
+  }
 </style>

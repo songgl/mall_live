@@ -6,71 +6,25 @@
          <div class="f20 pl-10">商品收藏</div>
        </div> 
       <div class="w100 h-360 mt-20">
+         <!-- <sort :current-page="currentPage" :all-page="allPage" @on-page="onPage" ></sort> -->
         <div class="w100 clearfix">
-          <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="priceBox">
-                 <span class="now_price">¥<em >999</em></span>
-                 <span class="origin_price">¥<em >9999</em></span>
-              </div>
-              <div class="goodsName" >酒香不怕港子深怕港子深怕港子深<span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">自营</span></div>
-              <div class="salesEvalu">
-                <span>评价:<em v-text=" 0"></em></span>
-                <span>销量:<em v-text=" 0"></em></span>
-              </div>
+
+            <div class="goodsItemBox" v-for="item in UserGoodsCollection" :key="item.goods_id">
+              <goods-item :goods-info='item'></goods-item>
+            </div>
           </div>
-        </div>
-          <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="priceBox">
-                 <span class="now_price">¥<em >999</em></span>
-                 <span class="origin_price">¥<em >9999</em></span>
-              </div>
-              <div class="goodsName" >酒香不怕港子深<span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">自营</span></div>
-              <div class="salesEvalu">
-                <span>评价:<em v-text=" 0"></em></span>
-                <span>销量:<em v-text=" 0"></em></span>
-              </div>
-          </div>
-        </div>
-          <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="priceBox">
-                 <span class="now_price">¥<em >999</em></span>
-                 <span class="origin_price">¥<em >9999</em></span>
-              </div>
-              <div class="goodsName" >酒香不怕港子深<span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">自营</span></div>
-              <div class="salesEvalu">
-                <span>评价:<em v-text=" 0"></em></span>
-                <span>销量:<em v-text=" 0"></em></span>
-              </div>
-          </div>
-        </div>
-           <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="priceBox">
-                 <span class="now_price">¥<em >999</em></span>
-                 <span class="origin_price">¥<em >9999</em></span>
-              </div>
-              <div class="goodsName" >酒香不怕港子深<span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">自营</span></div>
-              <div class="salesEvalu">
-                <span>评价:<em v-text=" 0"></em></span>
-                <span>销量:<em v-text=" 0"></em></span>
-              </div>
-          </div>
-        </div>
+          <div class="paginaction" v-show="allPage >= 1">
+            <el-pagination
+              :prev-text="'上一页'"
+              :next-text="'下一页'"
+              background
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="4"
+              layout="total,prev, pager, next, jumper"
+              :page-count="allPage">
+            </el-pagination>
+          </div>     
        </div>
       </div>
       
@@ -81,15 +35,23 @@
 </template>
 
 <script>
+import { Pagination } from 'element-ui'
 import '@/assets/css/cuimeng_style.css'
 import api from '@/api/api'
+import me from '@/api/me'
 import storage from '@/common/storage'
+// import sort from './private/sort'
 import GoodsItem from '@/components/goodsItem/goodsItem'
+
 export default {
   data () {
     return {
       userInfo: {},
-      userphonestar:''
+      userphonestar:'',
+      UserGoodsCollection: [],
+      currentPage: 1, // 当前页
+      allPage: 1 ,// 总页数
+      sortType: 1 // 排序类型默认为1(综合)
     }
   },
   methods: {
@@ -111,6 +73,42 @@ export default {
         }
       })
     },
+    // 获取收藏商品信息
+    _getUserGoodsCollection (p) {
+      this.UserGoodsCollection = []
+      this.currentPage = p || 1
+      me.getUserGoodsCollection({
+        p : this.currentPage,
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        pagesize:4
+      }).then(res => {
+        console.log(res)
+        if(res.status === 'ok'){
+          this.allPage = res.data.page
+          for(let i=0; i<res.data.list.length; i++){
+            this.UserGoodsCollection.push(res.data.list[i])
+          }
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+     // 切换排序类型
+    // onSort (type) {
+    //   this._getUserGoodsCollection(type)
+    // },
+     //onPage
+    onPage (count) {
+      this.currentPage = count
+    },
+     // 页数改变事件
+    handleCurrentChange (val) {
+      this._getUserGoodsCollection(val)
+    },
     // 用户手机号加*
     _rechangeUserphone (phone) {
          this.userphonestar = phone.substring(0,3)+ "****" + phone.substring(7,11); 
@@ -118,10 +116,13 @@ export default {
   },
   created () {
     this._getUserInfo();
+    this._getUserGoodsCollection(1);
    
   },
   components: {
-
+   GoodsItem,
+   // sort,
+   ElPagination: Pagination
   }
 }
 </script>
@@ -183,6 +184,11 @@ export default {
     margin-right: 2.6%;
   }
   .goodsItemBox:nth-of-type(4n){margin-right: 0; }
+
+  .paginaction{
+    margin: 10px auto 0;
+    width: 80%;
+  }
 /*商品样式*/
 .itemContent{
     width: 100%;

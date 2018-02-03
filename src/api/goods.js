@@ -31,14 +31,6 @@ export default {
   getGoodsDetails (data) {
     return post('api/Mall/goods_info', data)
   },
-  // 获取店铺详情
-  getShopDetails (data) {
-    return post('api/Mall/merchants_info', data)
-  },
-  // 店铺收藏与取消收藏
-  shopFollow (data) {
-    return post('api/User/follow_merchants', data)
-  },
   // 获取选中规格的价格与库存
   getSpecInfo (data) {
     return post('api/Mall/get_specification', data)
@@ -62,6 +54,34 @@ export default {
   // 下单
   submitOrder (data) {
     return post('api/Order/insertMallOrder', data)
+  },
+  // 获取店铺详情
+  getShopDetails (data) {
+    return post('api/Mall/merchants_info', data)
+  },
+  // 店铺收藏与取消收藏
+  shopFollow (data) {
+    return post('api/User/follow_merchants', data)
+  },
+  // 获取店铺分类
+  getShopClass (data) {
+    return post('api/Mall/merchants_class', data)
+  },
+  // 获取店铺分类下的商品列表
+  getShopGoodsList (data) {
+    return post('api/Mall/merchants_class_goods', data)
+  },
+  // 获取店铺导购视频
+  getShopGuideVideo (data) {
+    return post('api/live/video_list', data)
+  },
+  // 获取店铺的直播
+  getShopLive (data) {
+    return post('api/live/merchants_live', data)
+  },
+  // 获取店铺的录播列表
+  getShopPlayback (data) {
+    return post('api/live/playback_list', data)
   }
 }
 

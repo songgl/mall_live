@@ -2,9 +2,12 @@
  <div class="box">
       <div class="userInfoBox  clearfix">
       <div class="userImg fl">
-        <img src="../../../assets/images/tu2@3x.png" alt="">
+        <img :src="{{userInfo.header_img}}" alt="">
       </div>
-      <div class="btn_upimg fl box_center ">上传头像</div>
+      <div class="btn_upimg fl box_center ">上传头像 
+        <!-- <input id="file" class="userFile" type="file" name="img" v-on:chang=_upImg($event)> -->
+      </div>
+
       <div class="fl"></div>
     </div>
     <div class="w100 mt-40 ">
@@ -49,17 +52,17 @@
 
 <script>
 import '@/assets/css/cuimeng_style.css'
+import api from '@/api/api'
 export default {
   data () {
     return {
-
+      userInfo:{}
     }
   },
   methods: {
-
   },
   created () {
-
+   this._getUserInfo();
   },
   components: {
 

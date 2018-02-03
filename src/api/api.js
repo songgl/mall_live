@@ -16,7 +16,7 @@ export default {
   // 获取用户信息
   getUserInfo (data) {
     return post('api/user/user_info', data)
-  }
+  },
 }
 
 

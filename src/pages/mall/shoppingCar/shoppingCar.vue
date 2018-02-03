@@ -29,7 +29,7 @@
               </div>
               <div class="goods-content">
                 <!-- 商品列表 -->
-                <div class="goods-item clearfix" v-for="(goods, index) in shop.goods" :key="goods.goods_id">
+                <div class="goods-item clearfix" v-for="(goods, index) in shop.goods" :key="goods.car_id">
                   <div class="td td-chk" :class="[goods.checked ? 'on' : 'off']" @click="carGoodsItemClick(paIndex,index)"></div>
                   <div class="td td-item">
                     <div class="td-inner clearfix">
@@ -52,17 +52,17 @@
                   </div>
                   <div class="td td-price">¥<em v-text="goods.goods_now_price * goods.goods_num"></em></div>
                   <div class="td td-op">
-                    <span>删除</span>
+                    <span @click="_delCarGoods(goods.car_id)">删除</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="all-bra-warp clearfix">
               <div class="all-check" :class="[allChecked ? 'on' : 'off']" @click="checkAllClick">全选</div>
-              <div class="delOn">删除</div>
-              <div class="submit-btn on">结算</div>
+              <div class="delOn" @click="_delCarGoods()">删除</div>
+              <div class="submit-btn on" @click="settlement">结算</div>
               <div class="totalPrice">合计(不含运费): ¥<em v-text="totalMoney"></em></div>
-              <div class="checkOnCount">已选商品<em>0</em>件</div>
+              <div class="checkOnCount">已选商品<em v-text="car_ids.length"></em>件</div>
             </div>
           </div>
         </div>
@@ -79,7 +79,6 @@ import myHeader from '@/components/header/header'
 import myFooter from '@/components/footer/footer'
 import flowPath from './private/flowPath'
 import guessLike from './private/guessLike'
-
 export default {
   data () {
     return {
@@ -135,7 +134,6 @@ export default {
         }
       })
     },
-
     /*
     * 判断商品是否全部选中
     */
@@ -149,7 +147,6 @@ export default {
       }
       flag1 == true ? this.allChecked = true : this.allChecked = false;
     },
-
     /*
     * 全选
     */
@@ -175,7 +172,6 @@ export default {
     shopCheckAllClick (index) {
       let listObj = this.validInfo[index]
       let goods = this.validInfo[index]['goods'] // 当前店铺下的商品数组
-
       if ( this.validInfo[index]['checked'] ) {
         for (let i = 0; i < goods.length; i++ ) {
           goods[i]['checked'] = false
@@ -186,21 +182,18 @@ export default {
         }
       }
       // this.validInfo[index]['checked'] = !this.validInfo[index]['checked']; // Vue 不能检测这样变动的数组，所以视图不会更新
-
       listObj.checked = !listObj.checked
       this.$set(this.validInfo,index,listObj)
       
       this.isChooseAll() // 判断是否选择所有商品的全选
       this.carTotalMoney() // 计算总价
     },
-
     /*
     * 单个商品选中
     */
     carGoodsItemClick (paIndex,index) {
       let goodsArr = this.validInfo[paIndex]['goods'] // 当前店铺下的商品数组
       let goodsListObj = this.validInfo[paIndex].goods[index] // 当前的商品
-
       if ( goodsArr[index]['checked'] ) {
         this.validInfo[paIndex]['checked'] = false;
         this.allChecked = false;
@@ -209,7 +202,6 @@ export default {
       } else {
         goodsListObj.checked = !goodsListObj.checked
         this.$set(goodsArr,index,goodsListObj)
-
         // 判断当前店铺是否全选
         let flag = true
         for (let i = 0; i < goodsArr.length; i++ ) {
@@ -227,17 +219,20 @@ export default {
     * 计算商品总金额
     */
     carTotalMoney () {
-      let oThis = this
+      let _this = this
+      this.car_ids = []
       this.totalMoney = 0
       for ( let i = 0; i < this.validInfo.length; i++ ) {
         let goods = this.validInfo[i]['goods']
         goods.forEach(function(item, index, arr) {
           if ( goods[index]['checked'] ) {
-            oThis.totalMoney += parseFloat(item.goods_now_price) * parseFloat(item.goods_num)
+            _this.car_ids.push(goods[index].car_id)
+            _this.totalMoney += parseFloat(item.goods_now_price) * parseFloat(item.goods_num)
           }
         });
       }
-      console.log(oThis.totalMoney)
+      console.log(this.car_ids)
+      console.log(_this.totalMoney)
     },
     /*
     * 数量加减
@@ -245,7 +240,6 @@ export default {
     numberfn (paIndex,index,type) { // type=0(加)，type=1(减)
       let merchantsObj = this.validInfo[paIndex],
           goodsObj = this.validInfo[paIndex].goods[index]
-
       api.carGoodsCount(type,{
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
@@ -259,6 +253,71 @@ export default {
           }
           this.carTotalMoney() // 计算总价
         }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+    /*
+    * 结算
+    */
+    settlement () {
+      // let _this = this
+      // this.car_ids = []
+      // for( let i = 0; i<this.validInfo.length; i++){
+      //   let goods = this.validInfo[i]['goods']
+      //   goods.forEach(function(item, index, arr){
+      //     if(goods[index]['checked']){
+      //       _this.car_ids.push(goods[index].car_id)
+      //     }
+      //   })
+      // }
+      if(this.car_ids.length < 1){
+        this.promptFun({
+          content:'您还没有选择商品哦',
+          type:'error'
+        })
+        return false
+      }
+      this.$router.push({
+        path:'/confirmOrder',
+        query: {
+          car_ids: this.car_ids.join(",")
+        }
+      })
+    },
+    /*
+    * 删除
+    */
+    _delCarGoods (id) {
+      let paramCar = null
+      if(!id){ // 多个
+        if(this.car_ids.length < 1){
+          this.promptFun({
+            content:'您还没有选择商品哦',
+            type:'error'
+          })
+          return false
+        }
+        paramCar = this.car_ids.join(',')
+        console.log(paramCar)
+      } else {
+        paramCar = id
+      }
+      api.delCarGoods({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        car_ids: paramCar
+      }).then(res => {
+        if(res.status === 'ok'){
+          this._getCarGoods()
+          this.promptFun({
+            content: res.data,
+            type: 'success'
+          })
+        } else if(res.status === 'error'){
           this.promptFun({
             content: res.data,
             type: 'error'

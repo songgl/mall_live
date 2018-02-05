@@ -1,6 +1,6 @@
 <template>
   <div class="box-left">
-    <!-- 导购视频 -->
+    <!-- 直播 -->
     <div class="liveBox">
       <div class="titleBox">往期回放</div>
       <div class="content">

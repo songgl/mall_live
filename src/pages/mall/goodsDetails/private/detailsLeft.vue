@@ -18,7 +18,7 @@
       </div>
       <div class="shopBtnBox clearfix">
         <div class="btnItem">
-          <router-link :to="{path: 'shopDetails', query:{merchants_id: shopDetails.merchants_id}}" class="shopBtn joinShop">进店逛逛</router-link>
+          <router-link :to="{path: 'shopDetails', query:{merchants_id: shopDetails.member_id}}" class="shopBtn joinShop">进店逛逛</router-link>
         </div>
         <div class="btnItem">
           <div class="shopBtn" :class="[shopDetails.is_follow == 1 ? 'on' : 'off']" @click="shopFollow">收藏店铺</div>

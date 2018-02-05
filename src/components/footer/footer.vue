@@ -3,58 +3,54 @@
     <div class="contentBox">
       <div class="inner clearfix">
         <div class="itemBox">
-          <dl >
+          <dl>
             <dt class="clearfix">
               <span class="about_icon iconWH"></span>
               关于我们
             </dt>
-            <dd>商家入驻</dd>
-            <dd>关于百台云</dd>
-            <dd>招聘信息</dd>
+            <dd><router-link to="">商家入驻</router-link></dd>
+            <dd><router-link to="">关于百台云</router-link></dd>
+            <dd><router-link to="">招聘信息</router-link></dd>
           </dl>
         </div>
         <div class="itemBox">
           <dl class="m0a">
             <dt class="clearfix">
-              <span class="about_icon iconWH"></span>
-              关于我们
+              <span class="logistics_icon iconWH"></span>
+              配送方式
             </dt>
-            <dd>商家入驻</dd>
-            <dd>关于百台云</dd>
-            <dd>招聘信息</dd>
+            <dd><router-link to="">配送范围及时间</router-link></dd>
+            <dd><router-link to="">商品验货与签收</router-link></dd>
           </dl>
         </div>
         <div class="itemBox">
           <dl class="m0a">
             <dt class="clearfix">
-              <span class="about_icon iconWH"></span>
-              关于我们
+              <span class="pay_icon iconWH"></span>
+              支付方式
             </dt>
-            <dd>商家入驻</dd>
-            <dd>关于百台云</dd>
-            <dd>招聘信息</dd>
+            <dd><router-link to="">网上支付</router-link></dd>
+            <dd><router-link to="">支付常见问题</router-link></dd>
           </dl>
         </div>
         <div class="itemBox">
           <dl class="m0a">
             <dt class="clearfix">
-              <span class="about_icon iconWH"></span>
-              关于我们
+              <span class="service_icon iconWH"></span>
+              售后服务
             </dt>
-            <dd>商家入驻</dd>
-            <dd>关于百台云</dd>
-            <dd>招聘信息</dd>
+            <dd><router-link to="">法律声明</router-link></dd>
+            <dd><router-link to="">用户协议</router-link></dd>
           </dl>
         </div>
         <div class="itemBox clearfix">
           <dl class="fr">
             <dt class="clearfix">
-              <span class="about_icon iconWH"></span>
-              关于我们
+              <span class="help_icon iconWH"></span>
+              帮助信息
             </dt>
-            <dd>商家入驻</dd>
-            <dd>关于百台云</dd>
-            <dd>招聘信息</dd>
+            <dd><router-link to="">常见问题</router-link></dd>
+            <dd><router-link to="">联系客服</router-link></dd>
           </dl>
         </div>
       </div>
@@ -67,25 +63,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data () {
-    return {
-
-    }
-  },
-  methods: {
-
-  },
-  created () {
-
-  },
-  components: {
-
-  }
-}
-</script>
 
 <style scoped>
   .m0a{
@@ -123,6 +100,9 @@ export default {
     padding: 5px 0 0 25px;
     font-size: 12px;
   }
+  .itemBox a:hover{
+    color: red;
+  }
   .iconWH{
     display: inline-block;
     float: left;
@@ -131,6 +111,22 @@ export default {
   }
   .about_icon{
     background: url(../../assets/icon/guanyu@2x.png) no-repeat center;
+    background-size: cover;
+  }
+  .logistics_icon {
+    background: url(../../assets/icon/peisong@2x.png) no-repeat center;
+    background-size: cover;
+  }
+  .pay_icon {
+    background: url(../../assets/icon/zhifu@2x.png) no-repeat center;
+    background-size: cover;
+  }
+  .service_icon {
+    background: url(../../assets/icon/shouhou@2x.png) no-repeat center;
+    background-size: cover;
+  }
+  .help_icon {
+    background: url(../../assets/icon/bangzhu@2x.png) no-repeat center;
     background-size: cover;
   }
   .copyBox{

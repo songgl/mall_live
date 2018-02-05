@@ -32,6 +32,9 @@
   .mt-20{margin-top: 20px;}
   .mt-30{margin-top: 30px;}.mt-40{margin-top: 40px;}.mt-50{margin-top: 50px;}.mt-60{margin-top: 60px;}
   .mb-30{margin-bottom: 30px;}
+/*缩紧*/
+  .text-indent_1{text-indent:1em}.text-indent_2{text-indent:2em}.text-indent_3{text-indent:3em}
+
 
 /*边框*/
   .bor{border:1px solid #e3e4e5;}

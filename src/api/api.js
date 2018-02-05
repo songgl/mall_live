@@ -13,6 +13,7 @@ export default {
     param.append('file', file, file.name) // 通过append向form对象添加数据
     param.append('chunk', '0') // 添加form表单中其他数据
     console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+    // console.log(param)
     return axios.post(
       'api/login/upload',
       param, 

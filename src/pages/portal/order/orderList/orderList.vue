@@ -60,6 +60,18 @@
             </tbody></table>
           </div>
         </div>
+         <div class="paginaction" v-show="allPage >= 1">
+            <el-pagination
+              :prev-text="'上一页'"
+              :next-text="'下一页'"
+              background
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="4"
+              layout="total,prev, pager, next, jumper"
+              :page-count="allPage">
+            </el-pagination>
+          </div>  
       </div>
 
        
@@ -79,6 +91,8 @@ export default {
       orderList : [],
       currentPage: 1, // 当前页
       allPage: 1 ,// 总页数
+      sortType: 1, // 排序类型默认为1(综合)
+      orderType:''
     }
   },
   methods: {
@@ -108,6 +122,14 @@ export default {
           })
         }
       })
+    },
+      //onPage
+    onPage (count) {
+      this.currentPage = count
+    },
+     // 页数改变事件
+    handleCurrentChange (val) {
+      this._getUserGoodsCollection(this.orderType , val)
     },
 
   },

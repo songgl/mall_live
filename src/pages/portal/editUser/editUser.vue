@@ -4,7 +4,8 @@
       <div class="userImg fl">
         <img src="../../../assets/images/tu2@3x.png" alt="">
       </div>
-      <div class="btn_upimg fl box_center ">上传头像</div>
+      <div class="btn_upimg fl box_center ">上传头像 </div>
+
       <div class="fl"></div>
     </div>
     <div class="w100 mt-40 ">

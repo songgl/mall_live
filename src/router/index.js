@@ -19,6 +19,7 @@ import EditUser from '@/pages/portal/editUser/editUser'
 import OrderList from '@/pages/portal/order/orderList/orderList'
 import RefundOrder from '@/pages/portal/order/refundOrder/refundOrder'
 import EvaluateList from '@/pages/portal/order/evaluateList/evaluateList'
+import orderDetail from '@/pages/portal/order/orderDetail/orderDetail'
 
 import GoodsCollection from '@/pages/portal/collection/goodsCollection/goodsCollection'
 import MyFollow from '@/pages/portal/collection/myFollow/myFollow'
@@ -113,6 +114,10 @@ export default new Router({
           path: 'myAddress', // 我的地址
           name: 'myAddress',
           component: MyAddress
+        },{
+          path: 'orderDetail', // 订单详情
+          name: 'orderDetail',
+          component: orderDetail
         }
       ]
     }

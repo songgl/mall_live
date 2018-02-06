@@ -1,17 +1,17 @@
 <template>
   <div>
-          <div class="box mt-15">
+          <div class="box ">
        <div class="box_start ">
          <div class="f20">我的订单</div>
        </div> 
        <div class="mt-30">
          <div class="dd-nav">
-        <a href="JavaScript:;"  class="act" >全部订单（0）</a>
-        <a href="JavaScript:;"  class="">待付款（0）</a>
-        <a href="JavaScript:;"  class="">待发货（0）</a>
-        <a href="JavaScript:;"  class="">待收货（0）</a>
-        <a href="JavaScript:;"  class="">待评价（0）</a>
-        <a href="JavaScript:;"  class="">已完成（0）</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType===''?'act':''" v-on:click="_getOrderList('',1)">全部订单</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_pay'?'act':''" v-on:click="_getOrderList('wait_pay',1)">待付款</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_send'?'act':''" v-on:click="_getOrderList('wait_send',1)">待发货</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_receive'?'act':''" v-on:click="_getOrderList('wait_receive',1)">待收货</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_assessment'?'act':''" v-on:click="_getOrderList('wait_assessment',1)">待评价</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='end'?'act':''" v-on:click="_getOrderList('end',1)">已完成</a>
         <!-- <div class="btn"><input type="text"  placeholder="订单编号" class="">
           <i class="fa fa-search fa-lg"></i></div> -->
       </div>
@@ -27,7 +27,7 @@
       <div class="ddlist-box">
         <div class="ddlist " v-for="item in orderList " >
           <div class="tit"><span >下单时间：</span><span >订单号：{{item.order_no}}</span><span >{{item.merchants_name}}
-            <a target="_blank" href="http://kefu.easemob.com/webim/im.html?tenantId=45997"><img src="@/assets/icon/lianxishangjia.png"></a></span></div>
+            <a  href="http://kefu.easemob.com/webim/im.html?tenantId=45997"><img src="@/assets/icon/lianxishangjia.png"></a></span></div>
           <div class="table">
             <table cellspacing="0" cellpadding="0">
               <tbody><tr>
@@ -50,11 +50,13 @@
                 </td>
                 <td class="td2 red ">￥{{item.order_actual_price}}</td>
                 <td class="td3"><span class="">{{item.order_state==='cancel'?'取消':item.order_state==='wait_pay'?'待付款':item.order_state==='wait_send'?'带发货':item.order_state==='wait_receive'?'待确认收货':item.order_state==='wait_assessment'?'待评价':item.order_state==='end'?'已结束':''}}</span>
-                  <a href="#">订单详情</a>
+                  <router-link :to="{path: '/portal/orderDetail',query: {order_id:item.order_id,order_merchants_id:item.order_merchants_id}}">订单详情</router-link>
                 </td>
                 <td class="td4 " >
-                  <span class="huise"></span><router-link :to="{path: '/orderPay',query: {order_id:item.order_id,order_no:item.order_no}}" class="btn" >立即付款</router-link>
-                  <span class="del" >取消订单</span>
+                  <span v-if="item.order_state==='wait_pay'" class="huise"></span><router-link :to="{path: '/orderPay',query: {order_id:item.order_id,order_no:item.order_no}}" class="btn" >立即付款</router-link>
+                  <span class="btn" v-if="item.order_state==='wait_receive'" v-on:click="_receiveOrder(item.order_merchants_id)">确认收货</span>
+                  <span class="btn" v-if="item.order_state==='end'" v-on:click="_deleteOrder(item.order_merchants_id)">删除订单</span>
+                   <span class="del" v-if="item.order_state==='wait_pay'" v-on:click="_cancelOrder(item.order_merchants_id)"> 取消订单</span>
                 </td>
               </tr>
             </tbody></table>
@@ -96,7 +98,7 @@ export default {
     }
   },
   methods: {
-
+   
     // 获取订单列表
     _getOrderList (type,p) {
       this.orderList = []
@@ -123,7 +125,70 @@ export default {
         }
       })
     },
-      //onPage
+    // 取消订单
+    _cancelOrder (orid) {
+      api.cancelOrder({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        order_merchants_id : orid
+      }).then(res => {    
+      if(res.status === 'ok'){     
+        this.promptFun({
+            content: res.data,
+            type: 'true'
+          })
+        this._getOrderList();
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+    // 确认收货订单
+    _receiveOrder (orid) {
+      api.receiveOrder({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        order_merchants_id : orid
+      }).then(res => {    
+      if(res.status === 'ok'){     
+        this.promptFun({
+            content: res.data,
+            type: 'true'
+          })
+        this._getOrderList();
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+    // 删除订单
+    _deleteOrder (orid) {
+      api.deleteOrder({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        order_merchants_id : orid
+      }).then(res => {    
+      if(res.status === 'ok'){     
+        this.promptFun({
+            content: res.data,
+            type: 'true'
+          })
+        this._getOrderList();
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+     //onPage
     onPage (count) {
       this.currentPage = count
     },
@@ -149,6 +214,10 @@ export default {
   }
 
   dd-nav>a.act, .dd-nav>a:hover {
+    border-bottom: 2px solid #3f8fdf;
+    color: #3f8fdf;
+}
+ .act {
     border-bottom: 2px solid #3f8fdf;
     color: #3f8fdf;
 }

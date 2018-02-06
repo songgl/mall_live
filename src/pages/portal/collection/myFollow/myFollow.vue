@@ -7,63 +7,39 @@
        </div> 
       <div class="w100 h-360 mt-20">
         <div class="w100 clearfix">
-          <div class="goodsItemBox">
+          <div class="goodsItemBox" v-for="item in UserMerchantsCollection">
               <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
-              <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>
-              <div class="f_co_999 box_start mt-10"><span >店铺简介：</span><span class="grid_cell f_co_000 txwy">酒香不怕港子深怕港子深怕港子深</span> </div>
+                <router-link :to="{path: '/mall/shopDetails',query: {merchants_id:item.merchants_id}}" class="goodsImg">
+                   <img v-bind:src="item.merchants_img" alt="">
+                </router-link>
+              <div class="f_co_999 mt-10">店铺名：<span class="f_co_000" v-text="item.merchants_name"></span> </div>
+              <!-- <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div> -->
+              <div class="f_co_999 box_start mt-10"><span >店铺简介：</span><span class="grid_cell f_co_000 txwy" v-text="item.merchants_content"></span> </div>
               <div class="salesEvalu mt-20">
-                <span>销量:<em v-text=" 10"></em></span>
-                <span>共:<em v-text=" 2000"></em>件商品</span>
+                <span>月销量:<em v-text="item.month_sales"></em></span>
+                <!-- <span>共:<em v-text=" 2000"></em>件商品</span> -->
               </div>
               <div class="w100 box_arou mt-20" >
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">取消收藏</div>
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">联系客服</div>
+                <div class="f_co_fff box_center cursor bg_red w-70 h-26 borau-10" v-on:click="_cancelCollect(item.follow_id)">取消收藏</div>
+                <a  target="_blank" href="http://kefu.easemob.com/webim/im.html?tenantId=45997" class="f_co_fff box_center bg_red w-70 h-26 borau-10">联系客服</a>
               </div>
           </div>
         </div>
-        <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
-              <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>
-              <div class="f_co_999 box_start mt-10"><span >店铺简介：</span><span class="grid_cell f_co_000 txwy">酒香不怕港子深怕港子深怕港子深</span> </div>
-              <div class="salesEvalu mt-20">
-                <span>销量:<em v-text=" 10"></em></span>
-                <span>共:<em v-text=" 2000"></em>件商品</span>
-              </div>
-              <div class="w100 box_arou mt-20" >
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">取消收藏</div>
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">联系客服</div>
-              </div>
-          </div>
-        </div>
-        <div class="goodsItemBox">
-              <div class="itemContent">
-                <div class="goodsImg">
-                   <img src="../../../../assets/images/tu2@3x.png" alt="">
-                </div>
-              <div class="f_co_999 mt-10">店铺名：<span class="f_co_000">翠峰云</span> </div>
-              <div class="f_co_999 mt-10">店铺综合评分：<span class="f_co_D7474C">10.00</span> </div>
-              <div class="f_co_999 box_start mt-10"><span >店铺简介：</span><span class="grid_cell f_co_000 txwy">酒香不怕港子深怕港子深怕港子深</span> </div>
-              <div class="salesEvalu mt-20">
-                <span>销量:<em v-text=" 10"></em></span>
-                <span>共:<em v-text=" 2000"></em>件商品</span>
-              </div>
-              <div class="w100 box_arou mt-20" >
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">取消收藏</div>
-                <div class="f_co_fff box_center bg_red w-70 h-26 borau-10">联系客服</div>
-              </div>
-          </div>
-        </div>
-        
+     
        
        </div>
+        <div class="paginaction" v-show="allPage >= 1">
+            <el-pagination
+              :prev-text="'上一页'"
+              :next-text="'下一页'"
+              background
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="3"
+              layout="total,prev, pager, next, jumper"
+              :page-count="allPage">
+            </el-pagination>
+          </div>    
       </div>
       
     </div>
@@ -73,47 +49,79 @@
 </template>
 
 <script>
+import { Pagination } from 'element-ui'
 import '@/assets/css/cuimeng_style.css'
-import api from '@/api/api'
+import me from '@/api/me'
 import storage from '@/common/storage'
-import GoodsItem from '@/components/goodsItem/goodsItem'
 export default {
   data () {
     return {
-      userInfo: {},
-      userphonestar:''
+      UserMerchantsCollection: [],
+      currentPage: 1, // 当前页
+      allPage: 1 ,// 总页数
+      sortType: 1 // 排序类型默认为1(综合)
     }
   },
   methods: {
-    // 获取用户信息
-    _getUserInfo () {
-      api.getUserInfo({
+   // 获取收藏店铺信息
+    _getUserMerchantsCollection (p) {
+      this.UserMerchantsCollection = []
+      this.currentPage = p || 1
+      me.getUserMerchantsCollection({
+        p : this.currentPage,
         uid: this.getCookie('uid'),
-        token: this.getCookie('token')
-      }).then((res) => {
+        token: this.getCookie('token'),
+        pagesize:3
+      }).then(res => {
         console.log(res)
         if(res.status === 'ok'){
-          this.userInfo = res.data
-          this._rechangeUserphone(res.data.phone)
-          this.setCookie('userInfo', res.data)
+          this.allPage = res.data.page
+          for(let i=0; i<res.data.list.length; i++){
+            this.UserMerchantsCollection.push(res.data.list[i])
+          }
         }else if(res.status === 'error'){
           this.promptFun({
-            content: res.data
+            content: res.data,
+            type: 'error'
           })
         }
       })
     },
-    // 用户手机号加*
-    _rechangeUserphone (phone) {
-         this.userphonestar = phone.substring(0,3)+ "****" + phone.substring(7,11); 
-    }
+    // 取消收藏
+    _cancelCollect (folid) {
+      me.cancelCollect({
+        uid: this.getCookie('uid'),
+        token: this.getCookie('token'),
+        follow_id : folid
+      }).then(res => {    
+      if(res.status === 'ok'){     
+        this.promptFun({
+            content: res.data,
+            type: 'true'
+          })
+        this._getUserMerchantsCollection();
+        }else if(res.status === 'error'){
+          this.promptFun({
+            content: res.data,
+            type: 'error'
+          })
+        }
+      })
+    },
+  onPage (count) {
+      this.currentPage = count
+    },
+     // 页数改变事件
+    handleCurrentChange (val) {
+      this._getUserMerchantsCollection(val)
+    },
   },
   created () {
-    this._getUserInfo();
-   
+      this._getUserMerchantsCollection(1);
   },
   components: {
-
+   // sort,
+   ElPagination: Pagination
   }
 }
 </script>
@@ -186,6 +194,9 @@ export default {
   /*.itemContent:hover{
     box-shadow: 1px 1px 7px #999;
   }*/
+  .itemContent img{
+    height: 150px;
+  }
   .goodsImg{
     height: 150px;
   }

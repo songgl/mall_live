@@ -59,7 +59,7 @@
            <div class="grid_cell flex-direction flex-justify_start ">
               <el-steps direction="vertical" :active="1" space="50px">
                 <el-step title="item.AcceptTime+item.AcceptStation" icon="index === 0 ? 'el-icon-location
-':'el-icon-circle-check-outline'" v-for="(item,index) in LogInfo.Traces"></el-step>
+':'el-icon-circle-check-outline'" v-for="(item, index) in LogInfo.Traces" :key='index'></el-step>
               </el-steps>
            </div>
          </div>

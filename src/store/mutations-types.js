@@ -23,3 +23,6 @@ export const SET_GOODSDETAILS = 'SET_GOODSDETAILS'
 
 // shopDetails
 export const SET_SHOPDETAILS = 'SET_SHOPDETAILS'
+
+// orderType 
+export const SET_ORDERTYPE = 'SET_ORDERTYPE'

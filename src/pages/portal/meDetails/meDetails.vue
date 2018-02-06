@@ -26,39 +26,37 @@
             <p><img src="../../../assets/icon/dfk.png"></p>
             <ul>
               <li>待付款：<span class="">0</span></li>
-              <li><a href="">查看待支付订单&gt;</a></li>
+              <li><span @click="goOrderList('wait_pay')">查看待支付订单&gt;</span></li>
+            </ul>
+          </div>
+          <div>
+            <p><img src="../../../assets/icon/tkz.png"></p>
+            <ul>
+              <li>待发货：<span class="">0</span></li>
+              <li><span @click="goOrderList('wait_send')">查看待发货订单&gt;</span></li>
             </ul>
           </div>
           <div>
             <p><img src="../../../assets/icon/dsh.png"></p>
             <ul>
               <li>待收货：<span class="">0</span></li>
-              <li><a href="">查看待收货订单&gt;</a></li>
+              <li><span @click="goOrderList('wait_receive')">查看待收货订单&gt;</span></li>
             </ul>
           </div>
           <div>
             <p><img src="../../../assets/icon/dpj.png"></p>
             <ul>
               <li>待评论：<span class="">0</span></li>
-              <li><a href="">查看待评论订单&gt;</a></li>
-            </ul>
-          </div>
-          <div>
-            <p><img src="../../../assets/icon/tkz.png"></p>
-            <ul>
-              <li>退款售后：<span class="">0</span></li>
-              <li><a href="">查看退款售后订单&gt;</a></li>
+              <li><span @click="goOrderList('wait_assessment')">查看待评论订单&gt;</span></li>
             </ul>
           </div>
     </div>
-
-    
-
   </div>
   
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import '@/assets/css/cuimeng_style.css'
 import api from '@/api/api'
 import storage from '@/common/storage'
@@ -91,8 +89,21 @@ export default {
     },
     // 用户手机号加*
     _rechangeUserphone (phone) {
-         this.userphonestar = phone.substring(0,3)+ "****" + phone.substring(7,11); 
-    }
+      this.userphonestar = phone.substring(0,3)+ "****" + phone.substring(7,11); 
+    },
+
+    // 跳转订单列表
+    goOrderList (type) {
+      this.$router.push({
+        path: 'orderList'
+      })
+      this.setOrderType(type)
+    },
+
+    ...mapMutations({
+      setOrderType: 'SET_ORDERTYPE'
+    })
+
   },
   created () {
     this._getUserInfo();

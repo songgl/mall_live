@@ -6,12 +6,12 @@
        </div> 
        <div class="mt-30">
          <div class="dd-nav">
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType===''?'act':''" v-on:click="_getOrderList('',1)">全部订单</a>
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_pay'?'act':''" v-on:click="_getOrderList('wait_pay',1)">待付款</a>
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_send'?'act':''" v-on:click="_getOrderList('wait_send',1)">待发货</a>
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_receive'?'act':''" v-on:click="_getOrderList('wait_receive',1)">待收货</a>
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='wait_assessment'?'act':''" v-on:click="_getOrderList('wait_assessment',1)">待评价</a>
-        <a href="JavaScript:;"  class="" v-bind:class=" orderType==='end'?'act':''" v-on:click="_getOrderList('end',1)">已完成</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType===''?'act':''" v-on:click="_getOrderList('',1)">全部订单</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType==='wait_pay'?'act':''" v-on:click="_getOrderList('wait_pay',1)">待付款</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType==='wait_send'?'act':''" v-on:click="_getOrderList('wait_send',1)">待发货</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType==='wait_receive'?'act':''" v-on:click="_getOrderList('wait_receive',1)">待收货</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType==='wait_assessment'?'act':''" v-on:click="_getOrderList('wait_assessment',1)">待评价</a>
+        <a href="JavaScript:;"  class="" v-bind:class=" listType==='end'?'act':''" v-on:click="_getOrderList('end',1)">已完成</a>
         <!-- <div class="btn"><input type="text"  placeholder="订单编号" class="">
           <i class="fa fa-search fa-lg"></i></div> -->
       </div>
@@ -49,7 +49,7 @@
                 
                 </td>
                 <td class="td2 red ">￥{{item.order_actual_price}}</td>
-                <td class="td3"><span class="">{{item.order_state==='cancel'?'取消':item.order_state==='wait_pay'?'待付款':item.order_state==='wait_send'?'带发货':item.order_state==='wait_receive'?'待确认收货':item.order_state==='wait_assessment'?'待评价':item.order_state==='end'?'已结束':''}}</span>
+                <td class="td3"><span class="">{{item.order_state==='cancel'?'取消':item.order_state==='wait_pay'?'待付款':item.order_state==='wait_send'?'待发货':item.order_state==='wait_receive'?'待确认收货':item.order_state==='wait_assessment'?'待评价':item.order_state==='end'?'已结束':''}}</span>
                   <router-link :to="{path: '/portal/orderDetail',query: {order_id:item.order_id,order_merchants_id:item.order_merchants_id}}">订单详情</router-link>
                 </td>
                 <td class="td4 " >
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import '@/assets/css/cuimeng_style.css'
 import { Pagination } from 'element-ui'
 import storage from '@/common/storage'
@@ -94,8 +95,13 @@ export default {
       currentPage: 1, // 当前页
       allPage: 1 ,// 总页数
       sortType: 1, // 排序类型默认为1(综合)
-      orderType:''
+      listType:''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'orderType'
+    ])
   },
   methods: {
    
@@ -103,11 +109,11 @@ export default {
     _getOrderList (type,p) {
       this.orderList = []
       this.currentPage = p || 1
-      this.orderType = type || '' //cancel：取消 wait_pay:待付款 wait_send:带发货 wait_receive：待确认收货 wait_assessment：待评价 end：已结束 
+      this.listType = type || '' //cancel：取消 wait_pay:待付款 wait_send:带发货 wait_receive：待确认收货 wait_assessment：待评价 end：已结束 
       api.getOrderList({
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
-        order_state : this.orderType,
+        order_state : this.listType,
         p : this.currentPage,
         pagesize: 4
       }).then(res => {
@@ -194,12 +200,12 @@ export default {
     },
      // 页数改变事件
     handleCurrentChange (val) {
-      this._getUserGoodsCollection(this.orderType , val)
+      this._getUserGoodsCollection(this.listType , val)
     },
 
   },
   created () {
-    this._getOrderList()
+    this._getOrderList(this.orderType)
   },
   components: {
     ElPagination: Pagination,

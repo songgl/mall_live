@@ -9,6 +9,11 @@ const mutations = {
 	// goodsNavState
 	[types.SET_GOODSNAVSTATE](state, goodsNavState) {
 		state.goodsNavState = goodsNavState
+	},
+
+	// orderType
+	[types.SET_ORDERTYPE](state, type) {
+		state.orderType = type
 	}
 }
 

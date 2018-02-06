@@ -8,13 +8,15 @@
       <div class="userTxt fl">
         <p><span class="f26" v-text="userInfo.username"></span></p>
         <p class=""><span class="f12 f_co_999" v-text="userphonestar"></span></p>
-        <p class="mt-15">账户余额：<span class="f12 f_co_999" >1000</span><span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">提现</span></p>
+        <p class="mt-15">账户余额：<span class="f12 f_co_999" v-text="userInfo.amount"></span>
+          <!-- <span class="f_co_fff bg_red f10 ml-10 pl-5 pr-5">提现</span> -->
+        </p>
       </div>
-      <div class=" fl ">
+      <!-- <div class=" fl ">
         <p class="mt-15">积分：<span class="f12 f_co_fd655a" >1000</span></p>
         <p class="mt-15">信用额度：<span class="f12 f_co_fd655a" >1000</span></p>
         <p class="mt-15">优惠券：<span class="f12 f_co_fd655a" >2</span></p>
-      </div>
+      </div> -->
       <div class="fl"></div>
     </div>
     </div>

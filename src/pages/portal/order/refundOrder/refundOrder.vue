@@ -1,6 +1,6 @@
 <template>
   <div>
-          <div class="box mt-15">
+          <div class="box">
        <div class="box_start ">
          <div class="f20">我的订单</div>
        </div> 

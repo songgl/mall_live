@@ -32,8 +32,8 @@
                 <div class="box_end w-100 h-40">订单状态：</div>
                 <div class="grid_cell h-36 box_start f_co_fd655a" v-text="OrderInfo.order_state==='cancel'?'取消':OrderInfo.order_state==='wait_pay'?'待付款':OrderInfo.order_state==='wait_send'?'带发货':OrderInfo.order_state==='wait_receive'?'待确认收货':OrderInfo.order_state==='wait_assessment'?'待评价':OrderInfo.order_state==='end'?'已结束':''"></div>
             </div>
-            <router-link v-if="OrderInfo.order_state==='wait_pay'" :to="{path: '/orderPay',query: {order_id:OrderInfo.order_id,order_no:OrderInfo.order_no}}" class="btn" >立即付款</router-link>
-            <div class="btn" v-if="OrderInfo.order_state==='wait_receive'" v-on:click="_receiveOrder(OrderInfo.order_merchants_id)">确认收货</div>
+            <router-link v-if="OrderInfo.order_state==='wait_pay'" :to="{path: '/orderPay',query: {order_id:OrderInfo.order_id,order_no:OrderInfo.pay_no}}" class="btn" >立即付款</router-link>
+            <div class="btn" v-if="OrderInfo.order_state==='wait_receive'" @click="_receiveOrder(OrderInfo.order_merchants_id)">确认收货</div>
             <div class="btn" v-if="OrderInfo.order_state==='end'" v-on:click="_deleteOrder(OrderInfo.order_merchants_id)" >删除订单</div>
            
          </div>

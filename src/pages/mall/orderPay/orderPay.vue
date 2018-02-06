@@ -72,9 +72,9 @@ export default {
     }
   },
   methods: {
-    // 获取订单详情
+    // 下单支付获取订单信息
     _getOrderPayDetails () {
-      api.getOrderPayDetails({
+      api.getOrderPayDetails(this.$route.query.payType,{
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
         order_no: this.$route.query.order_no
@@ -100,7 +100,7 @@ export default {
         })
         return false;
       }
-      api.orderPay({
+      api.orderPay(this.$route.query.payType, {
         uid: this.getCookie('uid'),
         token: this.getCookie('token'),
         order_no: this.$route.query.order_no,

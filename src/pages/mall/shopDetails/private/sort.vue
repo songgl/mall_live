@@ -3,7 +3,7 @@
     <div class="sortBtnBox clearfix">
       <span class="item" :class="{ itemAct: type==1 }" @click="itemClick(1)">综合排序</span>
       <span class="item" :class="{ itemAct: type==2 }" @click="itemClick(2)">销量从高到低</span>
-      <span class="item" :class="{ itemAct: type==2 }" @click="itemClick(2)">销量从低到高</span>
+      <span class="item" :class="{ itemAct: type==5 }" @click="itemClick(5)">销量从低到高</span>
       <span class="item" :class="{ itemAct: type==3 }" @click="itemClick(3)">价格从高到低</span>
       <span class="item" :class="{ itemAct: type==4 }" @click="itemClick(4)">价格从低到高</span>
     </div>

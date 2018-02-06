@@ -103,11 +103,11 @@ export default {
       this.goodsList = []
       this.class_uuid = class_uuid
       this.currentPage = p || 1
-      // this.sortType = type || 1 // 排序类型
+      this.sortType = type || 1 // 排序类型
       api.getShopGoodsList({
         merchants_id: this.$route.query.merchants_id,
         class_uuid : this.class_uuid,
-        // type : this.sortType,
+        type : this.sortType,
         p : this.currentPage,
         pagesize: 20
       }).then(res => {

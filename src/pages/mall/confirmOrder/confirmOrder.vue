@@ -178,7 +178,7 @@ export default {
             path: 'orderPay',
             query: {
               order_no: res.data.order_no,
-              order_id: res.data.order_id
+              payType: '1'
             }
           })
         }else if(res.status === 'error'){

@@ -12,9 +12,7 @@
       </div>
       <div class="codeBox">
         <div class="codeTxt">APP下载</div>
-        <div class="codeImg">
-          <img src="../../../assets/images/code.png" alt="" />
-        </div>
+        <qrcode value="http://shop.100ytv.com/Index/web.html" :options="{ size: 75}"></qrcode>
       </div>
     </div>
   </div>
@@ -22,6 +20,8 @@
 
 <script>
 import logoImg from '@/assets/images/corelogo.png'
+import qrcode from '@xkeshi/vue-qrcode'
+
 export default {
   data () {
     return {
@@ -35,7 +35,7 @@ export default {
 
   },
   components: {
-
+    qrcode
   }
 }
 </script>
@@ -83,12 +83,6 @@ export default {
   }
   .codeBox{
     float: right;
-  }
-  .codeImg{
-    width: 55px;
-    height: 55px;
-    padding: 2px;
-    border: 1px solid #ccc;
   }
   .codeTxt{
     text-align: center;

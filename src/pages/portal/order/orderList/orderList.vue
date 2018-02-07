@@ -200,7 +200,7 @@ export default {
     },
      // 页数改变事件
     handleCurrentChange (val) {
-      this._getUserGoodsCollection(this.listType , val)
+      this._getOrderList(this.listType , val)
     },
 
   },

@@ -25,29 +25,29 @@
           <div>
             <p><img src="../../../assets/icon/dfk.png"></p>
             <ul>
-              <li>待付款：<span class="">0</span></li>
-              <li><span @click="goOrderList('wait_pay')">查看待支付订单&gt;</span></li>
+              <li>待付款：<span class="" v-text="userInfo.wait_count"></span></li>
+              <li><span class="cursor" @click="goOrderList('wait_pay')">查看待支付订单&gt;</span></li>
             </ul>
           </div>
           <div>
             <p><img src="../../../assets/icon/tkz.png"></p>
             <ul>
-              <li>待发货：<span class="">0</span></li>
-              <li><span @click="goOrderList('wait_send')">查看待发货订单&gt;</span></li>
+              <li>待发货：<span class="" v-text="userInfo.seed_count"></span></li>
+              <li><span class="cursor" @click="goOrderList('wait_send')">查看待发货订单&gt;</span></li>
             </ul>
           </div>
           <div>
             <p><img src="../../../assets/icon/dsh.png"></p>
             <ul>
-              <li>待收货：<span class="">0</span></li>
-              <li><span @click="goOrderList('wait_receive')">查看待收货订单&gt;</span></li>
+              <li>待收货：<span class="" v-text="userInfo.receive_count"></span></li>
+              <li><span class="cursor" @click="goOrderList('wait_receive')">查看待收货订单&gt;</span></li>
             </ul>
           </div>
           <div>
             <p><img src="../../../assets/icon/dpj.png"></p>
             <ul>
-              <li>待评论：<span class="">0</span></li>
-              <li><span @click="goOrderList('wait_assessment')">查看待评论订单&gt;</span></li>
+              <li>待评论：<span class="" v-text="userInfo.assessment_count"></span></li>
+              <li><span class="cursor" @click="goOrderList('wait_assessment')">查看待评论订单&gt;</span></li>
             </ul>
           </div>
     </div>
